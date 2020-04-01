@@ -12,5 +12,12 @@
         "Robot\\": "src"
       }
     },
-    "require": {}
+    "require": {},
+    "extra": {
+      "laravel": {
+        "providers": [
+          "Robot\\RobotServiceProvider"
+        ]
+      }
+    }
 }
