@@ -1,0 +1,16 @@
+{
+    "name": "zhengbin/vbot",
+    "description": "vbot package",
+    "authors": [
+        {
+            "name": "zhengbinGitHub",
+            "email": "122606861@qq.com"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Robot\\": "src"
+      }
+    },
+    "require": {}
+}
