@@ -71,7 +71,7 @@ class RobotGroupListener
                 'wx_id' => $item['wx_id'],
                 'status' => RobotGroup::GROUP_STATUS_NORMAL,
                 'type' => 0,
-                'expired_at' => $item['expired_at']??Carbon::parse('+5 day')->format('Y-m-d 00:00:00'),
+                'expired_at' => $item['expired_at']??Carbon::parse('+1 day')->format('Y-m-d 00:00:00'),
             ]);
         });
         return;

@@ -1,5 +1,6 @@
 {
     "name": "chuwei/vbot",
+    "version":"1.0",
     "description": "vbot package",
     "authors": [
         {
@@ -8,16 +9,17 @@
         }
     ],
     "autoload": {
-      "psr-4": {
-        "Robot\\": "src"
-      }
+        "psr-4": {
+            "Robot\\": "src/"
+        }
     },
+    "license": "MIT",
     "require": {},
     "extra": {
-      "laravel": {
-        "providers": [
-          "Robot\\RobotServiceProvider"
-        ]
-      }
+        "laravel": {
+            "providers": [
+                "Robot\\RobotServiceProvider"
+            ]
+        }
     }
 }

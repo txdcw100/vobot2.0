@@ -14,6 +14,8 @@ use Robot\Lib\Friend;
 use Robot\Lib\Group;
 use Robot\Lib\Login;
 use Robot\Lib\Message;
+use Robot\Lib\Keyword;
+use Robot\Lib\Send;
 
 class RobotManager
 {
@@ -70,5 +72,15 @@ class RobotManager
     public function getMessage()
     {
         return Message::init($this->config[self::CONFIG_INDEX]);
+    }
+
+    public function getKeyword()
+    {
+        return Keyword::init($this->config[self::CONFIG_INDEX]);
+    }
+
+    public function getSend()
+    {
+        return Send::init($this->config[self::CONFIG_INDEX]);
     }
 }

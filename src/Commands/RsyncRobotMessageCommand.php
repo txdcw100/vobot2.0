@@ -46,7 +46,7 @@ class RsyncRobotMessageCommand extends Command
      */
     public function handle()
     {
-        //
+
         $assistantList = $this->_getAssistant();
         if(count($assistantList) == 0) return;
         $times = [

@@ -18,7 +18,7 @@ class RobotQrcodeCommand extends Command
 {
 
 
-    protected $signature = 'robotqrcode:operate';
+    protected $signature = 'rsync:robotqrcode';
 
     protected $description = '图片转化';
 
@@ -58,7 +58,7 @@ class RobotQrcodeCommand extends Command
      */
     private function _getGroup()
     {
-        return RobotGroup::Where('expired_at', '<=', Carbon::parse('-5 day')->toDateTimeString())
+        return RobotGroup::Where('expired_at', Carbon::parse('-1 day')->format('Y-m-d 00:00:00'))
             ->orWhereNull('qrcode_img')
             ->get(['id', 'wx_id', 'robot_group_id', 'qrcode']);
     }

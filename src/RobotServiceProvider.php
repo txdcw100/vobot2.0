@@ -1,9 +1,9 @@
 <?php
 
-namespace Robot\Provider;
+namespace Robot;
 
 use Illuminate\Support\ServiceProvider;
-use Robot\RobotManager;
+use Robot\Commands as Commands;
 
 class RobotServiceProvider extends ServiceProvider
 {
@@ -12,7 +12,7 @@ class RobotServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = true;
+    protected $defer = false;
 
     /**
      * Bootstrap the application services.
@@ -31,6 +31,16 @@ class RobotServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.DIRECTORY_SEPARATOR.'migrations' => database_path('migrations'),
         ], 'migrations');
+
+        $this->commands([
+            Commands\RsyncAssistantStateCommand::class,
+            Commands\RsyncRobotCateMemberCommand::class,
+            Commands\RobotQrcodeCommand::class,
+            Commands\RsyncRobotMessageCommand::class,
+            Commands\DelRobotBlackFriendCommand::class,
+            Commands\ImportWbtGroupCateCommand::class,
+        ]);
+
     }
 
     /**
@@ -55,4 +65,9 @@ class RobotServiceProvider extends ServiceProvider
     {
         return ['robot'];
     }
+
+
+
+
+
 }

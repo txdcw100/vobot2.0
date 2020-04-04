@@ -14,7 +14,7 @@ class DelRobotBlackFriendCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'excue:delrobotblackfriend';
+    protected $signature = 'rsync:delrobotblackfriend';
 
     /**
      * The console command description.
