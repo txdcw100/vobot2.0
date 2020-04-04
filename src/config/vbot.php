@@ -6,9 +6,9 @@
  * Time: 17:11
  */
 return [
-    'appid' => env('VBOT_APPID', '43fcee38a15fa5c2db2803046565b826'),
-    'appsecret' => env('VBOT_APPSECRET', '76f689d6f21affc932cf118b1cb45567'),
-    'url' => env('VBOT_API_URL', 'http://vobot.cw100.cn/'),
+    'appid' => env('VBOT_APPID', '***'),
+    'appsecret' => env('VBOT_APPSECRET', '***'),
+    'url' => env('VBOT_API_URL', '****'),
     'login' => [
         'token' => 'api/token',
         'logout' => 'api/login/logout',
