@@ -22,6 +22,8 @@ class RobotQrcodeCommand extends Command
 
     protected $description = '图片转化';
 
+    const QUEUE_INDEX = 'robot-public';
+
     /**
      * @var RobotGroup
      */
@@ -48,7 +50,9 @@ class RobotQrcodeCommand extends Command
                 'chatroom' => $lv->wx_id,
                 'robot_group_id' => $lv->robot_group_id,
                 'qrcode' => $lv->qrcode,
-            ]))->delay(now()->addSeconds(1));
+            ]))
+            ->onQueue(self::QUEUE_INDEX)
+            ->delay(now()->addSeconds(1));
         }
     }
 

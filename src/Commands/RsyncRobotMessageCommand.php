@@ -23,6 +23,8 @@ class RsyncRobotMessageCommand extends Command
      */
     protected $description = '同步微信机器人聊天信息';
 
+    const QUEUE_INDEX = 'robot-public';
+
     /**
      * @var
      */
@@ -79,6 +81,7 @@ class RsyncRobotMessageCommand extends Command
         foreach ($groupList as $key=>$items){
             $options['group_id'] = $items->id;
             dispatch(new AddMessageJob($options))
+                ->onQueue(self::QUEUE_INDEX)
                 ->delay(now()->addSeconds($key+1));
 
             unset($options['group_id']);

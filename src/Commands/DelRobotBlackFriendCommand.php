@@ -25,6 +25,8 @@ class DelRobotBlackFriendCommand extends Command
 
     private $model;
 
+    const QUEUE_INDEX = 'robot-public';
+
     /**
      * Create a new command instance.
      *
@@ -112,7 +114,9 @@ class DelRobotBlackFriendCommand extends Command
                 $items->belongsToAssistant->wx_id,
                 $items->wx_id,
                 $toWxid
-            ))->delay(now()->addSeconds(1));
+            ))
+            ->onQueue(self::QUEUE_INDEX)
+            ->delay(now()->addSeconds(1));
         }
     }
 }
