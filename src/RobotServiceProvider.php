@@ -8,13 +8,6 @@ use Robot\Commands as Commands;
 class RobotServiceProvider extends ServiceProvider
 {
     /**
-     * 服务提供者加是否延迟加载.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
      * Bootstrap the application services.
      *
      * @return void
