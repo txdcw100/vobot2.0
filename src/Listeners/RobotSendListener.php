@@ -43,12 +43,15 @@ class RobotSendListener
         if(!$datas['tenant_id']) return self::getResult(0, '商户信息为空');
         $send = $this->store($datas);
         $groupIds = $this->_getGroup($datas['group_id']);
-        Cache::driver('redis')->forever('send:'.$send['data'], json_encode([
-            'start_time' => $send->plan_send,
-            'groupIds' => $groupIds,
-            'datas' => $datas,
-            'send_id'=>$send['data']
-        ]));
+        Cache::driver('redis')->set(
+            'send:'.$send['data'],
+            json_encode([
+                'start_time' => $datas['plan_send'],
+                'groupIds' => $groupIds,
+                'datas' => $datas,
+                'send_id'=>$send['data']
+            ]),
+            time()+51840000);
     }
 
     /**
