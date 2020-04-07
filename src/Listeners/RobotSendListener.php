@@ -51,7 +51,7 @@ class RobotSendListener
                 'datas' => $datas,
                 'send_id'=>$send['data']
             ]),
-            time()+51840000);
+            strtotime($datas['plan_send'])+51840000);
     }
 
     /**
