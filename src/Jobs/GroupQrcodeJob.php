@@ -70,7 +70,7 @@ class GroupQrcodeJob implements ShouldQueue
     {
         RobotGroup::where('id', $id)->update(
             [
-                'expired_at' => $datas['expired_at'],
+                'expired_at' => now()->format('Y-m-d 00:00:00'),
                 'qrcode' => $datas['qrcode'],
                 'qrcode_img' => uploadBase64($datas['qrcode'])['path']??''
             ]
