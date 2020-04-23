@@ -8,7 +8,6 @@
 
 namespace Robot\Commands;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Robot\Jobs\GroupQrcodeJob;
 use Robot\Models\RobotGroup;
@@ -62,7 +61,7 @@ class RobotQrcodeCommand extends Command
      */
     private function _getGroup()
     {
-        return RobotGroup::Where('expired_at', Carbon::parse('-1 day')->format('Y-m-d 00:00:00'))
+        return RobotGroup::WhereDate('expired_at', '<', now()->format('Y-m-d 00:00:00'))
             ->orWhereNull('qrcode_img')
             ->get(['id', 'wx_id', 'robot_group_id', 'qrcode']);
     }
