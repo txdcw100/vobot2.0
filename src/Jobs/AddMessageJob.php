@@ -15,6 +15,20 @@ class AddMessageJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * 任务运行的超时时间。
+     *
+     * @var int
+     */
+    public $timeout = 5;
+
+    /**
+     * 任务最大尝试次数。
+     *
+     * @var int
+     */
+    public $tries = 3;
+
+    /**
      * @var
      */
     private $options;

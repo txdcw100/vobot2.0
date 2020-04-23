@@ -19,7 +19,14 @@ class AddFriendJob implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 5;
+    public $timeout = 10;
+
+    /**
+     * 任务最大尝试次数。
+     *
+     * @var int
+     */
+    public $tries = 3;
 
     /**
      * @var

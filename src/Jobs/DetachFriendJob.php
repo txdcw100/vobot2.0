@@ -12,6 +12,20 @@ class DetachFriendJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * 任务最大尝试次数。
+     *
+     * @var int
+     */
+    public $tries = 3;
+
+    /**
+     * 任务运行的超时时间。
+     *
+     * @var int
+     */
+    public $timeout = 5;
+
     private $wxid, $chatroom, $toWxid;
     /**
      * Create a new job instance.
