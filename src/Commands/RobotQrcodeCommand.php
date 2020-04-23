@@ -50,8 +50,7 @@ class RobotQrcodeCommand extends Command
                 'robot_group_id' => $lv->robot_group_id,
                 'qrcode' => $lv->qrcode,
             ]))
-            ->onQueue(self::QUEUE_INDEX)
-            ->delay(now()->addSeconds(1));
+            ->onQueue(self::QUEUE_INDEX);
         }
     }
 
