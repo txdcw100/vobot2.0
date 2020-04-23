@@ -3,7 +3,7 @@
 namespace Robot\Listeners;
 
 
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
 use Robot\Models\RobotGroup;
 use Robot\Models\RobotGroupSend;
@@ -41,12 +41,17 @@ class RobotSendListener
         $datas = ($event->datas);
         if(!$datas) return self::getResult(0, '保存字段数据为空');
         if(!$datas['tenant_id']) return self::getResult(0, '商户信息为空');
-        $this->store($datas);
+        $send = $this->store($datas);
         $groupIds = $this->_getGroup($datas['group_id']);
-        app('robot')->getSend()->message(
-            $groupIds,
-            $datas
-        );
+        Redis::set(
+            'send:'.$send['data'],
+            json_encode([
+                'start_time' => $datas['plan_send'],
+                'groupIds' => $groupIds,
+                'datas' => $datas,
+                'send_id'=>$send['data']
+            ]),
+            'EX',strtotime($datas['plan_send'])+51840000);
     }
 
     /**
@@ -69,7 +74,7 @@ class RobotSendListener
             'status' => RobotSend::STATUS_NORMAL,
             'material_id' => $materialObj->id,
             'channel' => $datas['channel']??RobotSend::CHANNEL_ASSISTANT,
-            'send_at' => now()->toDateTimeString()
+            'plan_send' => $datas['plan_send']
         ]);
         $sendId = $sendObj->id;
         $groupItems = [];
