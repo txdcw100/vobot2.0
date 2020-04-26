@@ -60,7 +60,9 @@ class Base
             return false;
         }
         catch (\Exception $e){
-            info('robot interface httpPost exception:'.$e->getMessage().' url:'.$url, $options);
+            if(config('vbot.log')) {
+                info('robot interface httpPost exception:' . $e->getMessage() . ' url:' . $url, $options);
+            }
             return false;
         }
     }
@@ -97,7 +99,9 @@ class Base
             return false;
         }
         catch (\Exception $e){
-            info('robot interface httpGet exception:'.$e->getMessage().' url:'.$url, $options);
+            if(config('vbot.log')) {
+                info('robot interface httpGet exception:' . $e->getMessage() . ' url:' . $url, $options);
+            }
             return false;
         }
     }
