@@ -77,15 +77,17 @@ class RobotMessageListener
         foreach ($datas as $key=>$items){
             if($this->_getMessage($items['id'])) continue 1;
             if(in_array($items['msg_type'], ['10000', '10002'])) continue 1;
-                $options[] = [
-                    'msg_id' => $items['id'],
-                    'friend_id' => $this->_getFriendId($groupId, $items['wx_id'])?:0,
-                    'group_id' => $groupId,
-                    'wx_id' => $items['wx_id'],
-                    'msg_type' => $items['msg_type'],
-                    'content' => $items['content'],
-                    'created_at' => $items['created_at']?:now()->toDateTimeString(),
-                ];
+            if(empty($items['content'])) continue 1;
+
+            $options[] = [
+                'msg_id' => $items['id'],
+                'friend_id' => $this->_getFriendId($groupId, $items['wx_id'])?:0,
+                'group_id' => $groupId,
+                'wx_id' => $items['wx_id'],
+                'msg_type' => $items['msg_type'],
+                'content' => $items['content'],
+                'created_at' => $items['created_at']?:now()->toDateTimeString(),
+            ];
         };
         if($options){
             RobotGroupMessage::insert($options);
