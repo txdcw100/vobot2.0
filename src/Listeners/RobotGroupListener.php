@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Robot\Events\RobotCateIncFieldNumEvent;
+use Robot\Jobs\AddFriendJob;
+use Robot\Jobs\GroupQrcodeJob;
 use Robot\Models\RobotAssistant;
 use Robot\Models\RobotCate;
 use Robot\Models\RobotGroup;
@@ -89,14 +91,34 @@ class RobotGroupListener
         ])->value('id')) return;
         $result = RobotGroup::create($datas);
         if($result->id)
+            //生成群二维码
+            dispatch(new GroupQrcodeJob(['id' => $result->id, 'chatroom' => $datas['wx_id'], 'robot_group_id' => $datas['robot_group_id'], 'qrcode' => $datas['qrcode']]))->onQueue('robot-public');
             //增加群数事件
             event(new RobotCateIncFieldNumEvent($datas['cate_id'], 'group_count'));
             //增加人数事件
             event(new RobotCateIncFieldNumEvent($datas['cate_id'], 'member_count', $datas['friend_total']));
             //记录群成员队列
-            RobotService::init()->addFriendJob($result->id, $datas['robot_group_id'], true, 1, 'fresh');
+            $this->addFriendJob($result->id, $datas['robot_group_id'], true, 1, 'fresh');
             //更新头像
             $this->_upCateAvatar($datas['cate_id'], $datas['head_pic']);
+    }
+
+    /**
+     * 添加群成员队列
+     * @param $groupId
+     * @param $robotGroupId
+     * @param bool $isDelay
+     * @param int $seconds
+     * @param string $handle
+     * @return mixed
+     */
+    private function addFriendJob($groupId, $robotGroupId, $isDelay = false, $seconds = 1, $handle = '')
+    {
+        $object = dispatch(new AddFriendJob($groupId, $robotGroupId, $handle))->onQueue('friend');
+        if($isDelay){
+            $object = $object->delay(now()->addSeconds($seconds));
+        }
+        return $object;
     }
 
     /**
