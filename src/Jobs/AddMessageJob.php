@@ -26,7 +26,7 @@ class AddMessageJob implements ShouldQueue
      *
      * @var int
      */
-    public $tries = 3;
+    public $tries = 2;
 
     /**
      * @var

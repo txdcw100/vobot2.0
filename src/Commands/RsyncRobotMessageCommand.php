@@ -80,9 +80,7 @@ class RsyncRobotMessageCommand extends Command
 
         foreach ($groupList as $key=>$items){
             $options['group_id'] = $items->id;
-            dispatch(new AddMessageJob($options))
-                ->onQueue(self::QUEUE_INDEX)
-                ->delay(now()->addSeconds($key+1));
+            dispatch(new AddMessageJob($options))->onQueue(self::QUEUE_INDEX);
 
             unset($options['group_id']);
         }
